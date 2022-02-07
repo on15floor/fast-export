@@ -227,14 +227,14 @@ def export_file_contents(ctx,manifest,files,hgtags,encoding='',plugins={}):
     except Exception as e:
       d = bytes()
       stderr_buffer.write(b'File reading error: %s\n' % str(e))
-
-    if plugins and plugins['file_data_filters']:
-      file_data = {'filename':filename,'file_ctx':file_ctx,'data':d}
-      for filter in plugins['file_data_filters']:
-        filter(file_data)
-      d=file_data['data']
-      filename=file_data['filename']
-      file_ctx=file_data['file_ctx']
+    else:
+      if plugins and plugins['file_data_filters']:
+        file_data = {'filename':filename,'file_ctx':file_ctx,'data':d}
+        for filter in plugins['file_data_filters']:
+          filter(file_data)
+        d=file_data['data']
+        filename=file_data['filename']
+        file_ctx=file_data['file_ctx']
 
     wr(b'M %s inline %s' % (gitmode(manifest.flags(file)),
                            strip_leading_slash(filename)))
