@@ -212,6 +212,9 @@ def export_file_contents(ctx,manifest,files,hgtags,encoding='',plugins={}):
     if not hgtags and file == b".hgtags":
       stderr_buffer.write(b'Skip %s\n' % file)
       continue
+    if file in [b".hgsub", b".hgsubstate", b".hgflow"]:
+      stderr_buffer.write(b'Skip %s\n' % file)
+      continue
     if encoding:
       filename=file.decode(encoding).encode('utf8')
     else:
