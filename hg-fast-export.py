@@ -229,7 +229,7 @@ def export_file_contents(ctx,manifest,files,hgtags,encoding='',plugins={}):
       d = file_ctx.data()
     except Exception as e:
       d = bytes()
-      stderr_buffer.write(b'File reading error: %s\n' % str(e))
+      stderr_buffer.write(b'File reading error: %s\n' % str(e).encode())
     else:
       if plugins and plugins['file_data_filters']:
         file_data = {'filename':filename,'file_ctx':file_ctx,'data':d}
