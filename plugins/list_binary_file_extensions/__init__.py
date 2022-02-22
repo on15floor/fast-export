@@ -4,8 +4,10 @@ def build_filter(args):
 
 class Filter:
     def __init__(self, args):
+        args = args.split(',')
+        self.file = args[0]
+        self.bigger_then = int(args[1])
         self.extensions = set()
-        self.file = args
     
     def __del__(self):
         with open(self.file, 'w') as f:
@@ -14,7 +16,9 @@ class Filter:
     
     def file_data_filter(self, file_data):
         file_ctx = file_data['file_ctx']
-        if file_ctx.isbinary() and not file_ctx.islink():
+        if file_ctx.isbinary() and \
+                not file_ctx.islink() and \
+                (file_ctx.size() > self.bigger_then):
             file_name = file_data['filename'].split('/')[-1]
             ex = file_name.split('.')
             if len(ex) == 1:
