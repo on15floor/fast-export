@@ -24,7 +24,7 @@ class Filter:
         file_ctx = file_data['file_ctx']
         if not file_ctx.islink():
             if file_ctx.isbinary():
-                if file_ctx.size > self.bigger_than:
+                if file_ctx.size() > self.bigger_than:
                     self.binary_files.add(file_name)
             else:
                 file_ex = self.get_file_extension(file_name)
